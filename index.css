@@ -1,0 +1,113 @@
+body {
+  margin: 0px;
+  padding: 0px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: top;
+  min-height: 800px;
+}
+
+#inputDiv {
+  width: 1300;
+  display: flex;
+  justify-content: left;
+}
+
+#inputText {
+  margin-left: 30px;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  font-size: 20px;
+  margin: 19px 0px 16px 43px;
+}
+
+#gridSizeSlider {
+  width: 1300px;
+  margin: 19px 0px 16px 0px;
+}
+
+#interfaceDiv {
+  border-radius: 5px;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  min-height: 610px;
+  min-width: 1300px;
+  background: linear-gradient(to top, rgb(41, 41, 48) 10%, rgb(63, 63, 75));
+}
+
+#buttonsPanel {
+  box-sizing: border-box;
+  background: linear-gradient(to bottom, rgb(113, 113, 114), rgb(57, 57, 57));
+  display: grid;
+  grid-template-columns: auto;
+  row-gap: 1px;
+  align-items: center;
+  justify-content: center;
+  padding: 0px 0px;
+  border-left: 1px solid rgb(133, 133, 134);
+  width: 200px;
+}
+
+#gridCanvas {
+  border: 1px solid rgba(255, 0, 0, 0.083);
+  background-color: rgb(123, 123, 123);
+  background: linear-gradient(to top, rgb(41, 41, 48) 10%, rgb(63, 63, 75));
+}
+
+#buttonsPanel button {
+  width: 200px;
+  height: calc(610px / 3);
+  margin: 0px;
+  border: none;
+  color: white;
+  background-color: rgba(2, 2, 5, 0.58);
+  font-size: 22px;
+  font-family: "Trebuchet MS", "Lucida Sans Unicode", "Lucida Grande",
+    "Lucida Sans", Arial, sans-serif;
+  text-shadow: 0px 0px 3px rgba(0, 0, 0, 0.431);
+  object-fit: contain;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+#buttonsPanel button img {
+  object-fit: contain;
+
+  display: block;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+#speedButton img {
+  position: relative;
+  bottom: 20px;
+  right: 2px;
+  height: 32%;
+}
+#clearButton img {
+  height: 26%;
+  position: relative;
+  left: 7px;
+}
+#playButton img {
+  height: 26%;
+}
+
+#clearButton:hover,
+#playButton:hover,
+#speedButton:hover {
+  background-color: rgba(36, 43, 81, 0.519);
+}
+#clearButton:active,
+#playButton:active,
+#speedButton:active {
+  background-color: rgba(54, 63, 119, 0.519);
+}
+
+#speedButton span {
+  position: absolute;
+  top: 63%;
+  font-size: 30px;
+}
