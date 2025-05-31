@@ -6,6 +6,7 @@ const buttonsPanelDiv = document.getElementById("buttonsPanel");
 const input = document.getElementById("gridSizeSlider");
 const inputText = document.getElementById("inputText");
 const playButton = document.getElementById("playButton");
+let playImage = document.getElementById("playImage");
 let squareColumns = 31;
 input.value = squareColumns;
 inputText.innerText = "Columns: "+(squareColumns-2);
@@ -34,7 +35,7 @@ if (ctx) {
   horizontalShift = Math.round((canvas.clientWidth - ((squareSize+1) * (squareColumns-2))) / 2);
   verticalShift = Math.round(((canvas.clientHeight - ((squareSize+1) * (squareRows)))-1) / 2);
 
-  function drawGrid(squareColumns, obstacles=false) {
+  function drawGrid(squareColumns) {
 
     ctx.fillStyle = "white"
     ctx.clearRect(0,0,canvas.width,canvas.height);
@@ -46,6 +47,24 @@ if (ctx) {
 
     console.log(squareSize, squareRows, squareColumns, horizontalShift, verticalShift)
   }
+
+  function clearVisualizationFromCanvas(squareColumns) {
+    ctx.fillStyle = "white"
+    for (let row = 0; row < squareRows; row++) {
+      for (let col = 0; col < squareColumns-2; col++) {
+
+        const index = Math.floor((row*(squareColumns-2)+col)/4);
+        const stateQuad = squaresStatesArray[index];
+        const squareState = (stateQuad & (0b11 << (2*((row*(squareColumns-2)+col)%4)))) >> (2*((row*(squareColumns-2)+col)%4));
+
+        if (squareState!== 0b00) {continue}
+
+        ctx.clearRect(horizontalShift+(col*(squareSize+1))-1,verticalShift+(row*(squareSize+1))-1,squareSize+2,squareSize+2)
+        ctx.fillRect(horizontalShift+(col*(squareSize+1)),verticalShift+(row*(squareSize+1)),squareSize,squareSize)
+      }
+    }
+  }
+
   drawGrid(squareColumns)
 
   document.getElementById("clearButton").addEventListener("click",()=>{
@@ -54,20 +73,16 @@ if (ctx) {
     drawGrid(squareColumns)
     startAndEndSet = 0b00;
 
-    let playImage = document.getElementById("playImage");
     playImage.src = "Play Image.png"
 
   })
   playButton.addEventListener("click", async ()=>{
-    let playImage = document.getElementById("playImage");
     if (!playOn) {
-      playImage.src = "Stop Image.png"
+      playImage.src = "Stop Image.png";
       playOn = true;
     } else {
-      playImage.src = "Play Image.png"
-      recreateSquaresStates(squareColumns,squareRows);
-      drawGrid(squareColumns);
-      startAndEndSet = 0b00;
+      playImage.src = "Play Image.png";
+      clearVisualizationFromCanvas(squareColumns);
       playOn = false;
     }
 
@@ -83,7 +98,6 @@ if (ctx) {
   input.addEventListener("input", (event) => {
 
     playOn = false;
-    let playImage = document.getElementById("playImage");
     playImage.src = "Play Image.png"
     
     squareColumns = event.target.value;
@@ -137,7 +151,7 @@ if (ctx) {
   canvas.addEventListener("pointerdown", (e) => {
     e.preventDefault();
     isMouseDown = true;
-    handleCanvasMouseClickedEvent(e)
+    if (!playOn) {handleCanvasMouseClickedEvent(e)}
   }, { passive: false });
   window.addEventListener("pointerup", (e) => {
     isMouseDown = false;
@@ -145,7 +159,7 @@ if (ctx) {
 
   canvas.addEventListener("pointermove", (event) => {
     event.preventDefault();
-    if (isMouseDown && !isDrawing) {
+    if (isMouseDown && !isDrawing && !playOn) {
       isDrawing = true;
       requestAnimationFrame(() => {
         handleCanvasMouseClickedEvent(event)
@@ -154,5 +168,4 @@ if (ctx) {
     }
   }, { passive: false })
 }
-
 
