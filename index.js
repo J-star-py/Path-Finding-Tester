@@ -81,24 +81,24 @@ if (ctx) {
   })
 
   input.addEventListener("input", (event) => {
+
+    playOn = false;
+    let playImage = document.getElementById("playImage");
+    playImage.src = "Play Image.png"
+    
     squareColumns = event.target.value;
     inputText.innerText = "Columns: "+(squareColumns-2);
     squareSize = Math.floor(((canvas.clientWidth-50) / squareColumns) - ((squareColumns/180)));
     squareRows = Math.round((canvas.clientHeight-60) / (squareSize + 1) - 1);
     if (!(squareRows%2)){squareRows++}
 
-
     horizontalShift = Math.round((canvas.clientWidth - ((squareSize+1) * (squareColumns-2))) / 2);
     verticalShift = Math.round(((canvas.clientHeight - ((squareSize+1) * (squareRows)))-1) / 2);
-
+    
     ctx.clearRect(0,0,canvas.width,canvas.height);
     drawGrid(squareColumns);
     recreateSquaresStates(squareColumns,squareRows);
     startAndEndSet = 0b00;
-
-    playOn = false;
-    let playImage = document.getElementById("playImage");
-    playImage.src = "Play Image.png"
   });
 
   const canvasCoordinates = canvas.getBoundingClientRect();
