@@ -95,6 +95,10 @@ if (ctx) {
     drawGrid(squareColumns);
     recreateSquaresStates(squareColumns,squareRows);
     startAndEndSet = 0b00;
+
+    playOn = false;
+    let playImage = document.getElementById("playImage");
+    playImage.src = "Play Image.png"
   });
 
   const canvasCoordinates = canvas.getBoundingClientRect();
